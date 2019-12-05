@@ -8,84 +8,37 @@ import {
   Header,
   Left,
   Right,
-  Body } from 'native-base';
+  Body,
+Button } from 'native-base';
 import CardComponent from './CardComponenet';
+import { Actions } from 'react-native-router-flux';
 
 export default class Home extends React.Component {
-
+  static navigationOptions = {
+    tabBarIcon: ({tintColor})=>(
+        <Icon name="ios-home" style={{color: tintColor}}/>
+    )
+}
 
   render() {
-    return (
+    return (  
       <Container style={styles.container}>
-
-        <Header>
-          <Left><Icon name="camera" style={{ paddingLeft: 10 }}>
-          </Icon></Left>
-          <Body><Text>Instagram</Text></Body>
-          <Right><Icon name="send" style={{ paddingRight: 10 }}>
-          </Icon></Right>
+        <Header style={{ backgroundColor: '#fff'}}>
+          <Left><Button transparent>
+          <Icon name='ios-menu' style={{color: "#000"}} />
+        </Button>
+        </Left>
+          <Body><Text>Bluekola</Text></Body>
+          <Right>
+          <Button    onPress={()=> Actions.profile()} transparent>
+          <Icon name='ios-person' style={{color: "#000"}} />
+        </Button>
+          </Right>
         </Header>
         <Content>
-          <View style={{height: 100}}>
-            <View style={{flex: 1, flexDirection: 'row', justifyContent:
-            'space-between', alignItems: 'center', paddingHorizontal: 7 }}>
-                <Text style={{fontWeight: 'bold'}}>Stories</Text>
-                <View style={{flexDirection: 'row', 'alignItems': 'center'}}>
-                  <Icon name="md-play" style={{fontSize: 14}}></Icon>
-                  <Text style={{fontWeight: 'bold'}}>Watch All</Text>
-                </View>
-            </View>
-            <View style={{flex: 3}}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{
-                  alignItems: 'center',
-                  paddingStart: 5,
-                  paddingEnd: 5
-                }}
-              >
-                <Thumbnail
-                style={{marginHorizontal: 5, borderColor: 'black',
-                borderWidth: 2}}
-                source={require
-                ('../../assets/bklogo.png')} />
-                <Thumbnail
-                style={{marginHorizontal: 5, borderColor: 'black',
-                borderWidth: 2}}
-                source={require
-                ('../../assets/bklogo.png')} />
-                <Thumbnail
-                style={{marginHorizontal: 5, borderColor: 'black',
-                borderWidth: 2}}
-                source={require
-                ('../../assets/bklogo.png')} />
-                <Thumbnail
-                style={{marginHorizontal: 5, borderColor: 'black',
-                borderWidth: 2}}
-                source={require
-                ('../../assets/bklogo.png')} />
-                <Thumbnail
-                style={{marginHorizontal: 5, borderColor: 'black',
-                borderWidth: 2}}
-                source={require
-                ('../../assets/bklogo.png')} />
-                <Thumbnail
-                style={{marginHorizontal: 5, borderColor: 'black',
-                borderWidth: 2}}
-                source={require
-                ('../../assets/bklogo.png')} />
-                <Thumbnail
-                style={{marginHorizontal: 5, borderColor: 'black',
-                borderWidth: 2}}
-                source={require
-                ('../../assets/bklogo.png')} />
-              </ScrollView>
-            </View>
-          </View>
+          
           <CardComponent imageSource="1" likes="101"/>
-          <CardComponent imageSource="2" likes="201"/>
-          <CardComponent imageSource="3" likes="301"/>
+         
         </Content>
       </Container>
     );
@@ -95,6 +48,6 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
 });

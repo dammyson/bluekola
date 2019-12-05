@@ -1,45 +1,27 @@
 import React, { Component } from "react";
-import { ImageBackground, StatusBar } from "react-native";
+import { Image, ActivityIndicator, AsyncStorage, Alert, ImageBackground, Platform, StatusBar  } from "react-native";
 import {
   Container,
   Content,
   Text,
-  Button,
-  Icon,
   Item,
   Input,
+  Button,
+  Icon,
   View,
-  Toast,
-  Footer
+  Left,
+  Right,
+  Toast
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
 import styles from "./Style";
-
-const required = value => (value ? undefined : "Required");
-const email = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? "Invalid email address"
-    : undefined;
-type Props = {
-  navigation: () => void
-};
-declare type Any = any;
-class ForgotPassword extends Component {
-  textInput: Any;
-  state: {
-    offset: {
-      x: 0,
-      y: 0
-    }
-  };
-  props: Props;
-  constructor(props: Props) {
+const bg = require('../../assets/userbackground.jpg');
+const logo = require('../../assets/bklogoo.png');
+import { Actions } from 'react-native-router-flux';
+export default  class ForgotPassword extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      offset: {
-        x: 0,
-        y: 0
-      },
       name: ""
     };
   }
@@ -92,53 +74,90 @@ class ForgotPassword extends Component {
     return (
       <Container>
         <StatusBar barStyle="light-content" />
-        <ImageBackground
-          source={require("../../assets/userbackground.png")}
-          style={styles.background}
-        >
-          <Content contentOffset={this.state.offset}>
-            <Content padder scrollEnabled={false}>
-              <Text style={styles.forgotPasswordHeader}>
-                Forgot Your Password?
-              </Text>
-              <View style={styles.forgotPasswordContainer}>
-                <Field
-                  name="email"
-                  component={this.renderInput}
-                  type="email"
-                  validate={[email, required]}
-                />
+        <ImageBackground source={bg} style={styles.background}>
+          <Content contentContainerStyle={{ flex: 1 }}>
+            <View style={styles.container}>
+            <Text style={styles.signupHeader}>Change password</Text>
+            </View>
+            <View style={styles.container}>
 
+              <View style={styles.form}>
+
+                <Item rounded style={styles.inputGrp}>
+                  <Icon
+                    active
+                    name={"mail"}
+                    style={{ color: "#fff" }}
+                  />
+                  <Input
+                    ref={c => (this.textInput = c)}
+                    placeholderTextColor="#FFF"
+                    defaultValue={this.state.demail}
+                    autoCapitalize="none"
+                    style={styles.input}
+                    placeholder={"Email"}
+                    secureTextEntry={false}
+                    onChangeText={(text) => this.setState({ email: text })}
+                  />
+                </Item>
                 <Button
-                  rounded
-                  block
-                  bordered
-                  onPress={() => this.forgotPassword()}
-                  style={styles.emailBtn}
+                 rounded
+                 bordered
+                 block
+                  style={styles.loginBtn}
+                  onPress={() => this.login()}
                 >
-                  <Text style={{ color: "#FFF" }}>Send Email</Text>
+                  <Text style={{ color: "#FFF" }}>Continue</Text>
                 </Button>
+
+                <View style={styles.otherLinksContainer}>
+                  <Left>
+                    <Button
+                      small
+                      transparent
+                      style={{ alignSelf: "flex-start" }}
+                      onPress={() => Actions.reg()}
+                    >
+                      <Text style={styles.helpBtns}>Create Account</Text>
+                    </Button>
+                  </Left>
+                  <Right>
+                    <Button
+                      small
+                      transparent
+                      style={{ alignSelf: "flex-end" }}
+                      onPress={() => Actions.forgetpassword()}
+                    >
+                      <Text style={styles.helpBtns}>Forgot Password</Text>
+                    </Button>
+                  </Right>
+                </View>
+                <View style={{ flex: 1, alignSelf: "flex-end" }}>
+                  <Button
+                    light
+                    small
+                    transparent
+                    style={styles.skipBtn}
+                   
+                  >
+                    <Text
+                      style={
+                        (
+                          [styles.helpBtns],
+                          { top: Platform.OS === "ios" ? null : 0 }
+                        )
+                      }
+                    >
+                      Skip
+                    </Text>
+                  </Button>
+                </View>
               </View>
-            </Content>
+            </View>
+
           </Content>
-          <Footer
-            style={{
-              paddingLeft: 20,
-              paddingRight: 20,
-              backgroundColor: 'transparent'
-            }}
-          >
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Text style={styles.helpBtns}>Back To Login</Text>
-            </Button>
-          </Footer>
         </ImageBackground>
       </Container>
     );
   }
 }
-
-const ForgotPasswordf = reduxForm({
-  form: "help"
-})(ForgotPassword);
-export default ForgotPasswordf;

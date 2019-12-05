@@ -1,156 +1,93 @@
+
 import React, { Component } from 'react';
 
 import { StyleSheet, View, Text, TouchableOpacity,Image,  Dimensions, ImageBackground  } from 'react-native';
 
 import Swiper from 'react-native-swiper';
+import { Actions } from 'react-native-router-flux';
 
 export default class IntroSlider extends Component {
   
   render() {
     return(
-      <Swiper style={styles.wrapper} dot={<View style={{backgroundColor: '#66cc00', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
-      activeDot={<View style={{backgroundColor: '#FFF', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+      <ImageBackground
+      source={require('../../assets/bgtwo.png')}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+      >
+
+      <Swiper style={styles.wrapper} dot={<View style={{backgroundColor: '#749ad1', width: 10, height: 10, borderRadius: 5, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+      activeDot={<View style={{backgroundColor: '#2e2a79', width: 10, height: 10, borderRadius: 5, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
       paginationStyle={{
-        bottom: 200
-      }}>
-      <View style={styles.slide1}>
-          <ImageBackground
-          source={require('../../assets/bgone.png')}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-          >
-
-         <View style={styles.slidetop}>
-         </View>
-         <View style={styles.slidemid}>
-
-              <Image 
-                style={styles.logo}
-                resizeMode='contain'
-                source = {require('../../assets/bklogoo.png')}
-               />
-         <Text style={styles.text}>Get better control of your finances and time.</Text>
-         </View>
-         <View style={styles.slidebases}>
-         <TouchableOpacity style={styles.buttonContainer} 
-           onPress ={() =>  this.props.navigation.navigate('Registration')} >
-            <Text style={styles.buttonText}
-          >Sign Up</Text>
-
-          </TouchableOpacity>
-          <TouchableOpacity
-          onPress ={() =>  this.props.navigation.navigate('Login')} >
-          <Text style={styles.headTextW}>Sign In</Text>
-          </TouchableOpacity>
-         </View>
-         </ImageBackground>
-      </View>
+        bottom:  Dimensions.get('window').height/2
+      }}
+      loop={false}
+      bounces = {true}>
      
+     {this.renderServices()}
 
-      <View style={styles.slide1}>
-          <ImageBackground
-          source={require('../../assets/bgtwo.png')}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-          >
-
-         <View style={styles.slidetop}>
-         </View>
-         <View style={styles.slidemid}>
-         <Image 
-                style={styles.logo}
-                resizeMode='contain'
-                source = {require('../../assets/bklogoo.png')}
-               />
-         <Text style={styles.text}>Track Your time and maximize productivity.</Text>
-         </View>
-         <View style={styles.slidebases}>
-         <TouchableOpacity style={styles.buttonContainer} 
-           onPress ={() =>  this.props.navigation.navigate('Registration')} >
-            <Text style={styles.buttonText}
-          >Sign Up</Text>
-
-          </TouchableOpacity>
-          <TouchableOpacity
-          onPress ={() =>  this.props.navigation.navigate('Login')} >
-          <Text style={styles.headTextW}> Sign In</Text>
-          </TouchableOpacity>
-         </View>
-         </ImageBackground>
-      </View>
-
-
-
-      <View style={styles.slide1}>
-          <ImageBackground
-          source={require('../../assets/bgthree.png')}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-          >
-
-         <View style={styles.slidetop}>
-         </View>
-         <View style={styles.slidemid}>
-         <Image 
-                style={styles.logo}
-                resizeMode='contain'
-                source = {require('../../assets/bklogoo.png')}
-               />
-         <Text style={styles.text}>Monitor all your finances in one place with ease.</Text>
-         </View>
-         <View style={styles.slidebases}>
-         <TouchableOpacity style={styles.buttonContainer} 
-           onPress ={() =>  this.props.navigation.navigate('Registration')} >
-            <Text style={styles.buttonText}
-          >Sign Up</Text>
-
-          </TouchableOpacity>
-          <TouchableOpacity
-          onPress ={() =>  this.props.navigation.navigate('Login')} >
-          <Text style={styles.headTextW}>Sign In</Text>
-          </TouchableOpacity>
-         </View>
-         </ImageBackground>
-      </View>
-     
-
-
-      <View style={styles.slide1}>
-          <ImageBackground
-          source={require('../../assets/bgfour.png')}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-          >
-
-         <View style={styles.slidetop}>
-         </View>
-         <View style={styles.slidemid}>
-         <Image 
-                style={styles.logo}
-                resizeMode='contain'
-                source = {require('../../assets/bklogoo.png')}
-               />
-         <Text style={styles.text}>Monitor all your finances in one place with ease.</Text>
-         </View>
-         <View style={styles.slidebases}>
-         <TouchableOpacity style={styles.buttonContainer} 
-           onPress ={() =>  this.props.navigation.navigate('Registration')} >
-            <Text style={styles.buttonText}
-          >Sign Up</Text>
-
-          </TouchableOpacity>
-          <TouchableOpacity
-          onPress ={() =>  this.props.navigation.navigate('Login')} >
-          <Text style={styles.headTextW}>Sign In</Text>
-          </TouchableOpacity>
-         </View>
-         </ImageBackground>
-      </View>
-     
     </Swiper>
+
+      </ImageBackground>
     );
     }
+
+
+    renderServices() {
+      let cat = [];
+      for (var i = 0; i < categories.length; i++) {
+          cat.push(
+
+            <View style={styles.slide1}>
+
+            <View style={styles.slidetop}>
+                  <Image 
+                    style={styles.logo}
+                    resizeMode='contain'
+                    source = {categories[i].image}
+                  />
+            </View>
+  
+            <View style={styles.slidebases}>
+            <Text style={styles.headText}>{categories[i].title}</Text>
+            <Text style={styles.text}>{categories[i].text}</Text>
+            <TouchableOpacity style={styles.buttonContainer} 
+              onPress ={() =>  Actions.auth()} >
+                <Text style={styles.buttonText}
+              >Sign Up</Text>
+  
+              </TouchableOpacity>
+            </View>
+          
+        </View>
+              );
+      }
+      return cat;
+  }
 }
+var categories = [
+  {
+    key: 'somethun',
+    title: 'Put your money where \n your phone is',
+    text: 'Create a paychange wallet, and pay for petty \n transactions with your mobile phone.',
+    image: require('../../assets/iconfour.png'),
+    backgroundColor: '#59b2ab',
+  },
+  {
+    key: 'somethun-dos',
+    title: 'Fund your mobile wallet  ',
+    text: 'Fund your wallet from your bank account, and from merchants around you.',
+    image: require('../../assets/icontwo.png'),
+    backgroundColor: '#febe29',
+  },
+  {
+    key: 'somethun-dos',
+    title: 'No More Change wahala !',
+    text: 'Receive your change and Pay for goods and services, on the go!',
+    image: require('../../assets/iconthree.png'),
+    backgroundColor: '#febe29',
+  }
+];
 const styles = StyleSheet.create({
   wrapper: {
   },
@@ -158,10 +95,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000',
+   
   },
   slidetop: {
-    flex: 2,
+    flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
   
@@ -170,20 +107,26 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  slidemid: {
+  slidebases: {
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  slidebases: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
+   
    
   },
 
   text: {
-    color: '#fff',
+    color: '#2e2a79',
+    fontSize: 18,
+    fontWeight: '400',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft:25,
+    marginRight:25,
+    textAlign: 'center',
+  },
+  headText: {
+    color: '#2e2a79',
     fontSize: 23,
     fontWeight: 'bold',
     justifyContent: 'center',
@@ -194,34 +137,27 @@ const styles = StyleSheet.create({
   },
   buttonContainer:{
     height:50,
-    backgroundColor: "#fff",
+    backgroundColor: "#2e2a79",
     borderRadius: 30,
     alignItems: 'center',
     width: 300,
     marginLeft:25,
     marginRight:25,
     justifyContent: 'center',
+    marginTop:35,
    
   },
   buttonText:{
         textAlign:'center',
-        color: "#000",
-        fontWeight: '700'
-  },
-  headTextW:{
-    color: "#FFF",
-    fontWeight: '900',
-    fontSize:15,
-    textAlign:'left',
-    marginTop:15
+        color: "#fff",
+        fontWeight: '900'
   },
   logo:{
-    width:150,
-    height:150,
+    width:280,
+    height:280,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom:20
-    
-    
+
 }
 })

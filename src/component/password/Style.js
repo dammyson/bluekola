@@ -2,35 +2,30 @@ const React = require("react-native");
 const { Dimensions, Platform } = React;
 
 const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
 
 export default {
-  forgotPasswordContainer: {
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginTop:
-      deviceWidth < 330
-        ? Platform.OS === "android"
-          ? deviceHeight / 9 - 20
-          : deviceHeight / 8 - 10
-        : Platform.OS === "android"
-          ? deviceHeight / 7 - 20
-          : deviceHeight / 6 - 30
-  },
-  forgotPasswordHeader: {
-    alignSelf: "center",
-    fontSize: 22,
-    padding: 10,
-    fontWeight: "bold",
-    color: "#FFF",
-    marginTop:
-      Platform.OS === "android" ? deviceHeight / 6 : deviceHeight / 6 + 10
-  },
   background: {
     flex: 1,
     width: null,
     height: deviceHeight,
-    backgroundColor: "#FFF"
+    backgroundColor: "rgba(0,0,0,0.1)"
+  },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignSelf: "center"
+  },
+  logo: {
+    flex: 1,
+    resizeMode: "contain",
+     width:150,
+    height:150,
+    alignSelf: "center"
+  },
+  form: {
+    flex: 1,
+    paddingLeft: 20,
+    paddingRight: 20
   },
   formErrorIcon: {
     color: "#fff",
@@ -49,28 +44,49 @@ export default {
     textAlign: "right",
     top: -10
   },
-  inputGrp: {
-    flexDirection: "row",
-    borderRadius: 25,
-    backgroundColor: "rgba(255,255,255,0.2)",
-    marginBottom: 10,
-    borderWidth: 0,
-    borderColor: "transparent"
-  },
-  input: {
-    paddingLeft: 10,
-    color: "#FFF"
-  },
-  emailBtn: {
+  loginBtn: {
     height: 50,
     marginTop: 10,
     borderWidth: 1,
     borderColor: "#ddd"
   },
+  otherLinksContainer: {
+    paddingTop: deviceHeight < 600 ? 5 : Platform.OS === "android" ? 10 : 15,
+    flexDirection: "row"
+  },
+  signupHeader: {
+    alignSelf: "center",
+    fontSize: 22,
+    padding: 10,
+    fontWeight: "bold",
+    color: "#FFF",
+    marginTop:
+      Platform.OS === "android" ? deviceHeight / 6 : deviceHeight / 6 + 10
+  },
   helpBtns: {
     opacity: 0.9,
-    fontSize: 14,
     fontWeight: "bold",
-    color: "#FFF"
+    color: "#fff",
+    fontSize: Platform.OS === "android" ? 12 : 12
+  },
+  inputGrp: {
+    flexDirection: "row",
+    backgroundColor: "rgba(255,255,255,0.3)",
+    marginBottom: 8,
+    borderWidth: 0,
+    borderColor: "transparent"
+  },
+  input: {
+    paddingLeft: 10,
+    color: "#fff"
+  },
+  skipBtn: {
+    alignSelf: "flex-end",
+    marginTop: 10,
+    borderWidth: 0.3,
+    borderColor: "#FFF",
+    position: "absolute",
+    bottom: 15,
+    right: 0
   }
 };

@@ -1,51 +1,11 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import AppNavigator from './src/component/navigator/AppNavigator';
-import AppNavigatori from './src/component/navigator/TabsNavigation';
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import { reducer as formReducer } from 'redux-form';
-const rootReducer = combineReducers({
-  form: formReducer
-});
-
-const store = createStore(rootReducer);
+import React, {Component, AppRegistry} from 'react';
+import Main from './src/component/navigator/Main';
 
 export default class App extends Component{
  
   render() {
     return (
-      <Provider store={store}>
-      <AppNavigator/>
-      </Provider>
+      <Main/>
     );
   }
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
