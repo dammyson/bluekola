@@ -1,17 +1,19 @@
 import React from "react";
 import { View } from "react-native";
 import {  createBottomTabNavigator, createAppContainer } from "react-navigation";
+
+import Home from '../User/Feed';
+import Search from '../search/Search';
 import Profile from '../User/Profile';
-import Home from '../User/Home';
-import Setting from '../settings/Settings';
+
 import { Card, Icon,SocialIcon} from 'react-native-elements'
+import styles from "@twotalltotems/react-native-otp-input/styles";
 
 const TabsNavigation = createBottomTabNavigator( {
    
   Home: Home ,
-  Setting: Setting ,
+  Search: Search ,
   Profile: Profile ,
-  
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -19,6 +21,7 @@ const TabsNavigation = createBottomTabNavigator( {
         const { routeName } = navigation.state;
         if (routeName === 'Home') {
           return (
+            <View style={{paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'blue'}}> 
             <Icon
             active
             focused={focused}
@@ -26,24 +29,29 @@ const TabsNavigation = createBottomTabNavigator( {
             type='font-awesome'
             color={tintColor}
           />
+          </View>
           );
-        } else if(routeName === 'Profile') {
+        }else if(routeName === 'Search') {
           return (
-            <Icon
-            active
-            name="user"
-            type='font-awesome'
-            color={tintColor}
-          />
-          );
-        }else if(routeName === 'Setting') {
-          return (
+            <View style={{paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'blue'}}> 
             <Icon
             active
             name="search"
             type='font-awesome'
             color={tintColor}
           />
+          </View>
+          );
+        } else if(routeName === 'Profile') {
+          return (
+            <View style={{paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'blue'}}> 
+            <Icon
+            active
+            name="user"
+            type='font-awesome'
+            color={tintColor}
+          />
+          </View>
           );
         }
        

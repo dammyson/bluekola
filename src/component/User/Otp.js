@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Dimensions, TextInput, StyleSheet, AsyncStorage, Alert, ImageBackground, Platform, ActivityIndicator } from "react-native";
+import { Image, Dimensions, TextInput, StyleSheet, TouchableOpacity, Alert, ImageBackground, Platform, ActivityIndicator } from "react-native";
 import {
   Container,
   Content,
@@ -8,10 +8,7 @@ import {
   Input,
   Button,
   View,
- 
 } from "native-base";
-import { Field, reduxForm, Form } from 'redux-form';
-const URL = require("../server");
 import {
     SkypeIndicator,
   } from 'react-native-indicators';
@@ -26,32 +23,23 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 export default class Otp extends Component {
 
 
-  componentDidMount() {
-    AsyncStorage.setItem('rem', "login");
 
-    AsyncStorage.getItem('email').then((value) => {
-      if (value.toString() == '') {
-        this.setState({ 'demail': "" })
-      } else {
-
-        this.setState({ 'demail': value.toString() })
-      }
-
-    })
-
-
-  }
 
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      error: '',
+      otp: '',
+      userDetails:{},
       loading: true,
-      demail: "",
       buttonState: 'idle'
     };
+
+  }
+
+  componentDidMount() {
+    if(this.props.userDetails) {
+      this.setState({userDetails: this.props.userDetails});
+    }
 
   }
 
@@ -112,11 +100,12 @@ export default class Otp extends Component {
 
   logIn() {
     this.setState({ buttonState: 'busy' })
+    const {userDetails} = this.state
 
     setTimeout(() => {
       this.setState({ buttonState: 'success' })
       setTimeout(() => {
-       Actions.reg();
+        Actions.reg({ userDetails: userDetails });
       }, 2000);
   
     }, 2000);
@@ -136,12 +125,14 @@ export default class Otp extends Component {
               <View style={styles.formArea}>
 
               <View style={styles.arrowContainer}>
+              <TouchableOpacity onPress={() => Actions.pop()} >
               <Icon
                 name="arrowleft"
                 size={30}
                 type='antdesign'
                 color= '#fff'
               />
+              </TouchableOpacity>
               </View>
                 <View style={styles.card} >
                 <View style={styles.titleContainer}>
@@ -300,11 +291,11 @@ const styles = StyleSheet.create({
   },
 
   underlineStyleBase: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     borderWidth: 1,
     margin:3,
-    borderRadius: 20,
+    borderRadius: 15,
     backgroundColor:'#f1f1f1',
    
   },

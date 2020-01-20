@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Dimensions, TextInput, StyleSheet, AsyncStorage, Alert, ImageBackground, Platform, ActivityIndicator } from "react-native";
+import { Image, Dimensions, TextInput, StyleSheet, AsyncStorage, Alert, ImageBackground, TouchableOpacity, ActivityIndicator } from "react-native";
 import {
   Container,
   Content,
@@ -23,105 +23,73 @@ const bg = require('../../assets/bgthree.png');
 const logo = require('../../assets/logo.png');
 import { Actions } from 'react-native-router-flux';
 
+
 export default class Registration extends Component {
 
 
   componentDidMount() {
-    AsyncStorage.setItem('rem', "login");
-
-    AsyncStorage.getItem('email').then((value) => {
-      if (value.toString() == '') {
-        this.setState({ 'demail': "" })
-      } else {
-
-        this.setState({ 'demail': value.toString() })
-      }
-
-    })
-
+    if(this.props.userDetails) {
+      this.setState({userDetail: this.props.userDetails});
+    
+    }
 
   }
 
   constructor(props) {
     super(props);
     this.state = {
+      userDetail: {},
       email: '',
       password: '',
-      error: '',
-      loading: false,
-      demail: "",
+      confirmPassword: '',
       buttonState: 'idle'
     };
 
   }
 
 
- /*  login() {
-    this.setState({ loading: true })
-   let mail = "";
-    const { email, demail, token, password } = this.state
-    if (email == "") {
+ login() {
+   
+    const { email, confirmPassword, password, userDetail} = this.state
+    if (email == "" || password == "" || confirmPassword == "") {
 
-      if (demail == "") {
-        Alert.alert('Validation failed', 'Email field cannot be empty', [{ text: 'Okay' }])
-        return
-      } else {
-        mail = demail;
-      }
+      Alert.alert('Validation failed', ' Fields cannot be empty', [{ text: 'Okay' }])
+      return
 
     } else {
-      mail = email;
-    }
 
-    if (password == "") {
-      Alert.alert('Validation failed', 'Password field cannot be empty', [{ text: 'Okay' }])
-      return
-    }
 
-    this.setState({ loading: true })
-    fetch(URL.url + '/api/login', {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }, body: JSON.stringify({
-        email: mail,
-        mobile_token: token,
-        password: password,
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status) {
-          AsyncStorage.setItem('auth', res.token.toString());
-          AsyncStorage.setItem('email', email);
-          AsyncStorage.setItem('rem', "user");
-          this.setState({ loading: false })
-          Actions.home();
-        } else {
-
-          Alert.alert('Login failed', "Check your email and password and try again", [{ text: 'Okay' }])
-          this.setState({ loading: false })
-        }
-      }).catch((error) => {
-        console.log("Api call error");
-        alert(error.message);
-        this.setState({ loading: false })
-      });
-
-  }*/
-
-  logIn() {
-    this.setState({ buttonState: 'busy' })
-
-    setTimeout(() => {
-      this.setState({ buttonState: 'success' })
-      setTimeout(() => {
-        this.setState({ buttonState: 'idle' })
-      }, 2000);
+      if(phone.length > 5 ){
+        if (password == confirmPassword) {
+          const userDetails = {phone: userDetail.phone, email: email, password: password }
   
-    }, 2000);
+          this.setState({ buttonState: 'busy' })
+          setTimeout(() => {
+            this.setState({ buttonState: 'success' })
+            Actions.username({ userDetails: userDetails });
+  
+          }, 2000);
+  
+        } else {
+          Alert.alert('Validation failed', 'Password are not the same please enter them again', [{ text: 'Okay' }]);
+          return
+        }
+      }else{
+        
+        Alert.alert('Validation failed', 'Password must be morethan 5 character', [{ text: 'Okay' }]);
+          return
+      }
 
+      
+
+
+    }
+
+
+
+    
   }
+
 
   render() {
     return (
@@ -136,29 +104,32 @@ export default class Registration extends Component {
               <View style={styles.formArea}>
 
               <View style={styles.arrowContainer}>
+              <TouchableOpacity onPress={() => Actions.pop()} >
               <Icon
                 name="arrowleft"
                 size={30}
                 type='antdesign'
                 color= '#fff'
               />
+              </TouchableOpacity>
               </View>
                 <View style={styles.card} >
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}> Create Username & Password </Text>
+                    <Text style={styles.title}> Create email & Password </Text>
                   </View>
-                    <Text style={styles.subTitle}> Enter username and password</Text>
-                  <TextInput
-                    placeholder="Username"
+                    <Text style={styles.subTitle}> Enter email and password</Text>
+
+                     <TextInput
+                    placeholder="Email"
                     placeholderTextColor='#000'
                     returnKeyType="next"
                     onSubmitEditing={() => this.passwordInput.focus()}
-                    keyboardType="numeric"
+                    keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                     style={styles.input}
                     inlineImageLeft='ios-call'
-                    onChangeText={text => this.setState({ username: text })}
+                    onChangeText={text => this.setState({ email: text })}
                   />
 
                    <TextInput
@@ -166,12 +137,12 @@ export default class Registration extends Component {
                     placeholderTextColor='#000'
                     returnKeyType="next"
                     onSubmitEditing={() => this.passwordInput.focus()}
-                    keyboardType="numeric"
+                    keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                     style={styles.input}
                     inlineImageLeft='ios-call'
-                    onChangeText={text => this.setState({ username: text })}
+                    onChangeText={text => this.setState({ password: text })}
                   />
 
 
@@ -186,7 +157,7 @@ export default class Registration extends Component {
                     autoCorrect={false}
                     style={styles.input}
                     inlineImageLeft='ios-call'
-                    onChangeText={text => this.setState({ username: text })}
+                    onChangeText={text => this.setState({ confirmPassword: text })}
                   />
 
                   {this.state.buttonState =='busy' ?  
@@ -194,11 +165,11 @@ export default class Registration extends Component {
                    <SkypeIndicator color='white' />  
                   </Button>               
                   : this.state.buttonState =='success' ?    
-                   <Button onPress={() => this.logIn()} style={styles.successButtonContainer} block iconLeft>
+                   <Button style={styles.successButtonContainer} block iconLeft>
                   <Icon  name="check" size={30}  type='antdesign'  color= '#fff' />
                   </Button> 
                   : 
-                   <Button onPress={() => this.logIn()} style={styles.buttonContainer} block iconLeft>
+                   <Button onPress={() => this.login()} style={styles.buttonContainer} block iconLeft>
                   <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>ENTER</Text>
                   </Button>     }
 

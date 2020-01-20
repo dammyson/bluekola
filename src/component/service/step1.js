@@ -19,7 +19,8 @@ export default class step1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        first: '',
+      titleText: '',
+      data:''
       
     };
   }
@@ -27,7 +28,7 @@ export default class step1 extends Component {
   nextStep = () => {
     const { next, saveState } = this.props;
     // Save state for use in other steps
-    saveState({ name: this.state.first});
+    saveState({ title: this.state.titleText});
 
     // Go to next step
     next();
@@ -39,6 +40,13 @@ export default class step1 extends Component {
     back();
   }
 
+  componentDidMount() {
+    const { getState } = this.props;
+    const state = getState();
+    this.setState({data: state})
+    console.warn("TCL: step2 -> componentDidMount -> state", state);
+  }
+
   render() {
     return (
       <Container>
@@ -47,9 +55,9 @@ export default class step1 extends Component {
       <View style={[styles.container, styles.step1]}>
         <TextInput
           style={styles.input}
-          onChangeText={text => this.setState({ first: text })}
-          value={this.state.text}
-          placeholder={"First Name"}
+          onChangeText={text => this.setState({ titleText: text })}
+          defaultValue={this.state.data.title}
+          placeholder={"Business Name"}
           placeholderTextColor="#fff"
         />
         <View style={styles.btnContainer}>
@@ -88,6 +96,7 @@ const styles = StyleSheet.create({
       backgroundColor: "rgba(0,0,0,0.1)"
     },
     input: {
+      height:40,
       width: "80%",
       borderColor: "#fff",
       borderWidth: 2,

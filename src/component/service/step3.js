@@ -8,13 +8,13 @@ export class step3 extends Component {
     super(props);
 
     this.state = {
-        city:''
+        categoryText:''
     };
   }
 
   nextStep = () => {
     const { next, saveState } = this.props;
-    saveState({ city: this.state.city });
+    saveState({ category: this.state.categoryText });
     next();
   };
 
@@ -23,9 +23,9 @@ export class step3 extends Component {
       <View style={[styles.container, styles.step1]}>
         <TextInput
           style={styles.input}
-          onChangeText={text => this.setState({ city: text })}
+          onChangeText={text => this.setState({ categoryText: text })}
           value={this.state.text}
-          placeholder={"City"}
+          placeholder={"Category"}
           placeholderTextColor="#fff"
         />
 

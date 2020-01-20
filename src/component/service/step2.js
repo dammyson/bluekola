@@ -8,7 +8,7 @@ export class step2 extends Component {
     super(props);
 
     this.state = {
-        email:''
+        descriptionText:''
     };
   }
 
@@ -20,7 +20,7 @@ export class step2 extends Component {
 
   nextStep = () => {
     const { next, saveState } = this.props;
-    saveState({ email: this.state.email });
+    saveState({ description: this.state.descriptionText });
     next();
   };
 
@@ -29,9 +29,9 @@ export class step2 extends Component {
       <View style={[styles.container, styles.step1]}>
         <TextInput
           style={styles.input}
-          onChangeText={text => this.setState({ email: text })}
+          onChangeText={text => this.setState({ descriptionText: text })}
           value={this.state.text}
-          placeholder={"Email"}
+          placeholder={"Description"}
           placeholderTextColor="#fff"
         />
         <View style={[styles.btnContainer, styles.marginAround]}>

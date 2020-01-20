@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 
   text: {
     color: '#2e2a79',
-    fontSize: 18,
+    fontSize: 13,
     fontWeight: '400',
     justifyContent: 'center',
     alignItems: 'center',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   headText: {
     color: '#2e2a79',
-    fontSize: 23,
+    fontSize: 20,
     fontWeight: 'bold',
     justifyContent: 'center',
     alignItems: 'center',

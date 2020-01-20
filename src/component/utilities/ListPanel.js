@@ -28,10 +28,6 @@ class ListPanel extends Component {
                         <View style={ headerLeftPartStyle }>
                             <Text style={{ fontSize: 16 }}>{ this.props.title }</Text>
                         </View>
-                        <TouchableOpacity onPress={ this.props.onPressSeeAll } style={ styles.headerRightPart }>
-                            <Text style={{ marginRight: 10, color: '#01215B' }}>See All</Text>
-                            <Icon style={{ color: '#01215B' }} name='angle-right' size={ 23 } />
-                        </TouchableOpacity>
                     </View>
 
                     { this.props.children }

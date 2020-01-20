@@ -138,67 +138,51 @@ const homeData = {
         items: [
             {
                 id: 1,
-                name: 'Earing',
+                name: 'Tailor',
                 imageUri: 'https://c1.staticflickr.com/6/5062/5649039693_4ae12562b5_b.jpg',
-                prize: 80,
-                regularPrize: 100.00,
-                discountPercent: 20
+               
             },
             {
                 id: 2,
-                name: 'iPhone 7 Plus 6S Plus 6 Plus Screen Protector',
+                name: 'Photographer',
                 imageUri: 'https://c1.staticflickr.com/8/7014/6712827125_4e1e474737_b.jpg',
-                prize: 7.99,
-                regularPrize: 29.99,
-                discountPercent: 73
+               
             },
             {
                 id: 3,
-                name: 'iPhone 7 Plus 6S Plus 6 Plus Screen Protector,',
+                name: 'Carpenter ',
                 imageUri: 'https://c1.staticflickr.com/6/5545/10770069154_b626552554_b.jpg',
-                prize: 30.10,
-                regularPrize: 39.99,
-                discountPercent: 25
+              
             },
             {
                 id: 4,
-                name: 'Skip Hop Moby Bath Tear-Free Waterfall Rinser, Blue',
+                name: 'Electricians',
                 imageUri: 'https://c1.staticflickr.com/9/8142/6974554082_5b5a7ef762_z.jpg',
-                prize: 8.00,
-                regularPrize: 10.00,
-                discountPercent: 20
+             
             },
             {
                 id: 3,
-                name: 'iPhone 7 Plus 6S Plus 6 Plus Screen Protector,',
+                name: 'Plumber',
                 imageUri: 'https://c1.staticflickr.com/6/5545/10770069154_b626552554_b.jpg',
-                prize: 30.10,
-                regularPrize: 39.99,
-                discountPercent: 25
+        
             },
             {
                 id: 4,
-                name: 'Skip Hop Moby Bath Tear-Free Waterfall Rinser, Blue',
+                name: 'Make Up artisit',
                 imageUri: 'https://c1.staticflickr.com/9/8142/6974554082_5b5a7ef762_z.jpg',
-                prize: 8.00,
-                regularPrize: 10.00,
-                discountPercent: 20
+               
             },
             {
                 id: 3,
-                name: 'iPhone 7 Plus 6S Plus 6 Plus Screen Protector,',
+                name: 'Barber,',
                 imageUri: 'https://c1.staticflickr.com/6/5545/10770069154_b626552554_b.jpg',
-                prize: 30.10,
-                regularPrize: 39.99,
-                discountPercent: 25
+             
             },
             {
                 id: 4,
-                name: 'Skip Hop Moby Bath Tear-Free Waterfall Rinser, Blue',
+                name: 'Auto Mechanic',
                 imageUri: 'https://c1.staticflickr.com/9/8142/6974554082_5b5a7ef762_z.jpg',
-                prize: 8.00,
-                regularPrize: 10.00,
-                discountPercent: 20
+
             }
         ]
     },

@@ -28,6 +28,7 @@ export default StyleSheet.create({
     flex: 1
   },
   input: {
+    height:40,
     width: "80%",
     borderColor: "#fff",
     borderWidth: 2,
