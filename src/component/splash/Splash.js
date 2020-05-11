@@ -8,20 +8,20 @@ export default class Splash extends Component{
   async componentDidMount(){
     setTimeout(() => {
      //this.initPage();
-   Actions.auth();
+     this.props.navigation.navigate('Home');
     }, 1000);
    }
 
   initPage = () => {
     AsyncStorage.getItem('rem').then((value) => {
       if(value=='login'){
-        Actions.home({ email: "jesus" });
+        this.props.navigation.navigate('Home');
 
       }else if(value==null){
-        Actions.intro({ email: "jesus" });
+        this.props.navigation.navigate('Home');
       }
       else{
-        Actions.intro({ email: "jesus" });
+        this.props.navigation.navigate('Home');
       } 
     })
    

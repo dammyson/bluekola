@@ -24,22 +24,20 @@ import generate from '@babel/generator';
 export default class Feed extends React.Component {
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
-            <Icon name="search" type='font-awesome'  color={tintColor } />
+            <Icon name="search" type='font-awesome' color={tintColor} />
         )
     }
 
     constructor(props) {
         super(props);
         this.state = {
-          searchMode: true,
-          searchText:''
+            searchMode: false,
+            searchText: ''
         };
-      }
+    }
 
     render() {
         return (
-            <Container style={{ backgroundColor: 'transparent' }}>
-                <Content>
                     <View style={styles.container}>
 
                         <View style={styles.header}>
@@ -55,6 +53,20 @@ export default class Feed extends React.Component {
                                     style={styles.menu}
                                     onChangeText={text => this.setState({ searchText: text })}
                                 />
+
+
+
+                                <TouchableOpacity onPress={()=> this.setState({ searchMode: true })} style={styles.square}>
+
+                                    <Icon
+                                        size={18}
+                                        active
+                                        name="search"
+                                        type='font-awesome'
+                                        color='#fff'
+
+                                    />
+                                </TouchableOpacity>
 
                             </View>
                         </View>
@@ -73,18 +85,17 @@ export default class Feed extends React.Component {
                             </View>
 
                         </View>
-                          {this.state.searchText.length > 2 ?
-                             <View>
-                             {this.renderResuts(homeData.grid_fashion)}
-                            </View>
-                          :   
-                        <ScrollView>
-                            {this._renderGridList(homeData.grid_fashion)}
-                        </ScrollView>}
+                        {this.state.searchMode  ?
+                            <ScrollView>
+                                {this.renderResuts(homeData.grid_fashion)}
+                            </ScrollView>
+                            :
+                            <ScrollView>
+                                {this._renderGridList(homeData.grid_fashion)}
+                            </ScrollView>}
 
                     </View>
-                </Content>
-            </Container>
+           
         );
     }
     _renderGridList(data) {
@@ -131,71 +142,35 @@ export default class Feed extends React.Component {
 
                         </View>
                     </View>
-                    <View style={styles.locationButton}>
 
-                        <View style={styles.resultActiom}>
 
-                            <View style={styles.segmentConatainer}>
-                                <View style={styles.iconText}>
-                                    <Icon
-                                        size={18}
-                                        active
-                                        name="scissors"
-                                        type='entypo'
-                                        color='red'
 
-                                    />
-                                    <Text style={{ color: 'red', fontWeight: '700', fontSize: 14, marginLeft:3 }}>20</Text>
-                                </View>
+                    <View style={styles.segmentConatainer}>
+                        <TouchableOpacity style={styles.circle}>
 
-                                <View style={styles.iconText}>
-                                    <Icon
-                                        size={18}
-                                        active
-                                        name="tie"
-                                        type='material-community'
-                                        color='green'
+                            <Icon
+                                size={18}
+                                active
+                                name="phone"
+                                type='font-awesome'
+                                color='#fff'
 
-                                    />
-                                    <Text style={{ color: 'green', fontWeight: '700', fontSize: 14,}}>99</Text>
-                                </View>
-                            </View>
-                            <View style={styles.segmentConatainer}>
-                            <TouchableOpacity style={styles.circle}>
+                            />
+                        </TouchableOpacity>
 
-                                <Icon
-                                    size={18}
-                                    active
-                                    name="phone"
-                                    type='font-awesome'
-                                    color='#fff'
+                        <TouchableOpacity style={styles.circle}>
 
-                                />
-                            </TouchableOpacity>
+                            <Icon
+                                size={16}
+                                active
+                                name="message1"
+                                type='antdesign'
+                                color='#fff'
 
-                            <TouchableOpacity style={styles.circle}>
-
-                                <Icon
-                                    size={16}
-                                    active
-                                    name="message1"
-                                    type='antdesign'
-                                    color='#fff'
-
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.segmentConatainer}>
-                            <TouchableOpacity style={styles.resultButtonContainer} block iconLeft>
-                                <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>View Profile</Text>
-                            </TouchableOpacity>
-                        </View>
+                            />
+                        </TouchableOpacity>
                     </View>
 
-
-
-
-                </View>
 
                 </View >
             );
@@ -207,8 +182,10 @@ export default class Feed extends React.Component {
 const styles = StyleSheet.create({
     container: {
         width: Dimensions.get('window').width,
+        backgroundColor: '#F5F5F5'
     },
     header: {
+        paddingTop: 30,
         backgroundColor: '#fff',
         paddingBottom: 10
 
@@ -223,17 +200,18 @@ const styles = StyleSheet.create({
     },
     menu: {
         flex: 1,
+        height: 40,
         marginRight: 13,
         marginLeft: 13,
         fontSize: 13,
         fontWeight: '300',
         color: '#000',
         textAlign: 'left',
-        height:35,
-        marginTop:15
+        height: 35,
+        marginTop: 15,
     },
     loacationBox: {
-        flex: 1,
+        
         marginRight: 13,
         marginLeft: 13,
         borderRadius: 20,
@@ -260,18 +238,18 @@ const styles = StyleSheet.create({
         paddingLeft: 20
     },
 
-
-
     resultBox: {
-        flex: 1,
         marginRight: 13,
         marginLeft: 13,
         borderRadius: 20,
         marginBottom: 15,
         marginTop: 15,
         backgroundColor: '#fff',
-        padding: 10
+        padding: 10,
+        flexDirection: 'row'
     },
+
+
     resultDescription: {
         flexDirection: 'row',
         marginBottom: 5,
@@ -283,15 +261,10 @@ const styles = StyleSheet.create({
     resultTextDescription: {
         flex: 1
     },
-    resultActiom: {
-        alignItems:'center',
-        flexDirection: 'row',
-        margin: 5,
-    },
     iconText: {
         flexDirection: 'row',
-        marginLeft:5,
-        marginRight:5,
+        marginLeft: 5,
+        marginRight: 5,
     },
     circle: {
         backgroundColor: '#394fa1',
@@ -300,25 +273,29 @@ const styles = StyleSheet.create({
         paddingTop: 7,
         paddingBottom: 7,
         borderRadius: 25,
-        marginLeft:5,
-        marginRight:5,
+        marginLeft: 5,
+        marginRight: 5,
 
 
     },
     segmentConatainer: {
-        flex: 1,
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+
     },
-    resultButtonContainer: {
-        backgroundColor: "#749AD1",
-        marginLeft: 3,
-        marginRight: 1,
-        borderRadius: 25,
-        paddingTop: 3,
-        paddingBottom: 3,
+    square: {
+        backgroundColor: '#394fa1',
+        paddingLeft: 10,
         paddingRight: 10,
-        paddingLeft: 10
+        paddingTop: 7,
+        paddingBottom: 7,
+        marginLeft: 5,
+        marginRight: 5,
+
+
     },
+
 })
 
 

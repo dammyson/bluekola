@@ -33,7 +33,7 @@ const TabsNavigation = createBottomTabNavigator( {
           );
         }else if(routeName === 'Search') {
           return (
-            <View style={{paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'blue'}}> 
+            <View style={{ height:40, width:40, paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'red'}}> 
             <Icon
             active
             name="search"

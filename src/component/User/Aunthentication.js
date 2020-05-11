@@ -147,6 +147,7 @@ export default class Authentication extends Component {
     })
       .then(res => res.json())
       .then(res => {
+        console.warn(res)
         if (res.status) {
           AsyncStorage.setItem('auth', res.token.toString());
           AsyncStorage.setItem('rem', "login");

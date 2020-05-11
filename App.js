@@ -1,5 +1,5 @@
 import React, {Component, AppRegistry} from 'react';
-import Main from './src/component/navigator/Main';
+import Main from './src/component/navigator/AppNavigator';
 
 export default class App extends Component{
  

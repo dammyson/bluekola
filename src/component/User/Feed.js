@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,AsyncStorage, Dimensions, Text, ImageBackground, ScrollView, View, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, AsyncStorage, Dimensions, Text, ImageBackground, ScrollView, View, TouchableOpacity, Alert } from 'react-native';
 import {
     Container,
     Content,
@@ -15,8 +15,8 @@ import { Actions } from 'react-native-router-flux';
 import { Icon, Avatar } from 'react-native-elements';
 import {
     SkypeIndicator,
-  } from 'react-native-indicators';
-  const URL = require("../../component/server");
+} from 'react-native-indicators';
+const URL = require("../../component/server");
 import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel';
 
 
@@ -36,8 +36,8 @@ export default class Feed extends React.Component {
 
         this.state = {
             loading: false,
-            data:[],
-            auth:'',
+            data: [],
+            auth: '',
             dataone: [],
             datatwo: [],
             slider1ActiveSlide: 0,
@@ -51,14 +51,14 @@ export default class Feed extends React.Component {
     componentDidMount() {
         AsyncStorage.getItem('auth').then((value) => {
             if (value == '') {
-      
+
             } else {
-              this.setState({ auth: value })
+                this.setState({ auth: value })
             }
             this.loadServices();
-          })
-         
-     
+        })
+
+
         this.setState({
             dataone: regions_list,
         })
@@ -72,100 +72,112 @@ export default class Feed extends React.Component {
         console.warn(auth);
         this.setState({ loading: true });
         fetch(URL.url + '/api/services', {
-          method: 'GET', headers: {
-            Accept: 'application/json',
-            'Authorization': 'Bearer ' + auth,
-            'Content-Type': 'application/json',
-          }
-        })
-    
-          .then(res => res.json())
-          .then(res => {
-            console.warn(res)
-            if (!res.data) {
-              Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
+            method: 'GET', headers: {
+                Accept: 'application/json',
+                'Authorization': 'Bearer ' + auth,
+                'Content-Type': 'application/json',
             }
+        })
 
-            this.setState({
-              data: res.data,
-              loading: false,
-              status: res.status,
-    
+            .then(res => res.json())
+            .then(res => {
+                console.warn(res)
+                if (!res.data) {
+                    Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
+                }
+
+                this.setState({
+                    data: res.data,
+                    loading: false,
+                    status: res.status,
+
+                });
+                this.arrayholder = res.data;
+            })
+            .catch(error => {
+                alert(error.message);
+                this.setState({ loading: false })
             });
-            this.arrayholder = res.data;
-          })
-          .catch(error => {
-            alert(error.message);
-            this.setState({ loading: false })
-          });
-      };
+    };
     render() {
 
-    if (this.state.loading) {
-        return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
-            <View style={{height: 90, alignItems: 'center',  justifyContent: 'center',}}>
-            <SkypeIndicator count={5} color='#1A4093' />
-            <Text style={{fontSize:13,  fontWeight:'500',  flex: 1, color: '#1A4093'}}>Please wait...</Text>
-            </View>
-           
-            </View>
-        );
-      }
+        if (this.state.loading) {
+            return (
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
+                    <View style={{ height: 90, alignItems: 'center', justifyContent: 'center', }}>
+                        <SkypeIndicator count={5} color='#1A4093' />
+                        <Text style={{ fontSize: 13, fontWeight: '500', flex: 1, color: '#1A4093' }}>Please wait...</Text>
+                    </View>
+
+                </View>
+            );
+        }
 
         return (
-            <Container style={{ backgroundColor: 'transparent' }}>
-                <Content>
-                    <View style={styles.container}>
-<View style={{height: 20, backgroundColor:'#fff'}}></View>
-                        <View style={styles.header}>
-                        <Text style={{ color: '#000', fontWeight: '700', fontSize: 12, marginLeft: 10 ,  marginTop: 10 }}>categories</Text>
-                            <ScrollView horizontal={true}
-                            showsHorizontalScrollIndicator={false}>
-                                {this.renderCategory()}
+            <View style={styles.container}>
+                <View style={{ height: 25 }}></View>
+                <View style={styles.header}>
 
-                            </ScrollView>
+                    <View style={{ flexDirection: 'row' , marginBottom: 5}}>
+                        <Text style={{ color: '#000', flex: 1, fontWeight: '700', fontSize: 12, marginLeft: 10, marginTop: 10 }}>categories</Text>
 
+                        <TouchableOpacity style={styles.notificationBox}>
 
-
-                        </View>
-
-
-                        <View style={styles.loacationBox}>
-
-                            <View style={styles.loacationText}>
-                                <Text style={{ color: '#000', fontWeight: '700', fontSize: 12, marginLeft: 10 }}>Location</Text>
-                                <Text style={{ color: '#000', fontWeight: '200', fontSize: 10, marginLeft: 10 }}>Victoria Island, Lagos</Text>
-                            </View>
-                            <View style={styles.locationButton}>
-                                <TouchableOpacity style={styles.buttonContainer} block iconLeft>
-                                    <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>Change</Text>
-                                </TouchableOpacity>
-                            </View>
-
-                        </View>
-
-
-                        <View>
-
-                            <Carousel
-                                ref={(c) => { this._carousel = c; }}
-                                data={this.state.data}
-                                renderItem={this._renderItem}
-                                sliderWidth={Dimensions.get('window').width}
-                                itemWidth={Dimensions.get('window').width / 1.3}
-                                hasParallaxImages={true}
-                                layout={'default'}
-
+                            <Icon
+                                size={16}
+                                active
+                                name="ios-notifications"
+                                type='ionicon'
+                                color='#fff'
 
                             />
-
-                        </View>
-                       
-
+                        </TouchableOpacity>
                     </View>
-                </Content>
-            </Container>
+                    <ScrollView horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        {this.renderCategory()}
+
+                    </ScrollView>
+
+
+
+                </View>
+
+
+                <View style={styles.loacationBox}>
+
+                    <View style={styles.loacationText}>
+                        <Text style={{ color: '#000', fontWeight: '700', fontSize: 12, marginLeft: 10 }}>Location</Text>
+                        <Text style={{ color: '#000', fontWeight: '200', fontSize: 10, marginLeft: 10 }}>Victoria Island, Lagos</Text>
+                    </View>
+                    <View style={styles.locationButton}>
+                        <TouchableOpacity style={styles.buttonContainer} block iconLeft>
+                            <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>Change</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
+
+                <View>
+
+                    <Carousel
+                        ref={(c) => { this._carousel = c; }}
+                        data={this.state.data}
+                        renderItem={this._renderItem}
+                        sliderWidth={Dimensions.get('window').width}
+                        itemWidth={Dimensions.get('window').width / 1.3}
+                        hasParallaxImages={true}
+                        layout={'default'}
+
+
+                    />
+
+                </View>
+
+
+            </View>
+
         );
     }
 
@@ -175,14 +187,12 @@ export default class Feed extends React.Component {
     }
     _renderItem({ item, index }, parallaxProps) {
         return (
-            <View style={{ width: Dimensions.get('window').width - 80, height: Dimensions.get('window').height/1.6, }}>
-              <View style={{justifyContent:'center', alignItems:'center', backgroundColor: '#17153d', height:30, paddingTop: 1, paddingBottom: 1, borderTopLeftRadius: 20, borderTopRightRadius: 20 , marginTop:2 }}>
-              <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>7 miles Away</Text>
-              </View>
+            <View style={{ width: Dimensions.get('window').width - 100, height: Dimensions.get('window').height / 1.8, }}>
+
                 <ImageBackground
-                    style={{ flex:1, alignItems: 'flex-start', borderRadius: 12, marginTop:0 }}
+                    style={{ flex: 1, borderRadius: 12, marginTop: 0 }}
                     source={require('../../assets/sanket.png')}
-                    imageStyle={{ overflow: 'hidden', position: "absolute", borderTopLeftRadius: 20, borderTopRightRadius: 20  }}
+                    imageStyle={{ overflow: 'hidden', position: "absolute", borderRadius: 20, }}
                 >
                     <View style={styles.shareConatainer}>
                         <TouchableOpacity style={styles.circle}>
@@ -216,81 +226,57 @@ export default class Feed extends React.Component {
 
                     </View>
 
-                    <View style={styles.details} >
+                    <View style={[styles.details,]} >
 
-                        <Text style={{ color: '#FFF', fontWeight: '900', fontSize: 20, margin: 10 , marginLeft: 20,}}>{item.category_id} Up artist</Text>
+                        <Text style={{ color: '#FFF', fontWeight: '900', fontSize: 20, margin: 10, marginLeft: 20, }}>{item.short_brief}</Text>
+
+                    </View>
+
+                    <View style={{ backgroundColor: '#fff', paddingTop: 1, paddingBottom: 1, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+
+
+                        <View style={styles.resultActiom}>
+                            <View style={{ flex: 1, marginLeft: 10, }}>
+                                <Text style={{ color: '#000', fontWeight: '700', fontSize: 16, marginLeft: 10 }}>{item.short_brief} </Text>
+                            </View>
+
+                        </View>
+
+
+                        <View style={{ marginLeft: 20, marginBottom: 10 }}>
+                            <Text style={{ color: '#000', textAlign: 'left', fontWeight: '200', fontSize: 12, }}> {item.description}</Text>
+                        </View>
 
                     </View>
 
 
                 </ImageBackground>
-                <View style={{ backgroundColor: '#fff', paddingTop: 1, paddingBottom: 1, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
 
 
-                    <View style={styles.resultActiom}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={{ color: '#000', fontWeight: '700', fontSize: 16,marginLeft: 10 }}>{item.short_brief} </Text>
-                        </View>
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity onPress={() => this.processRegistration()} style={styles.actionButtonContainer} block iconLeft>
+                        <Icon
+                            size={18}
+                            active
+                            name="phone"
+                            type='font-awesome'
+                            color='#9dc5fe'
 
-                        <View style={styles.segmentConatainer}>
-                            <View style={styles.iconText}>
-                                <Icon
-                                    size={18}
-                                    active
-                                    name="scissors"
-                                    type='entypo'
-                                    color='red'
+                        />
+                        <Text style={{ color: '#fdfdfd', fontWeight: '700', marginLeft: 10 }}>Call</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.processRegistration()} style={styles.actionButtonContainer} block iconLeft>
+                        <Icon
+                            size={18}
+                            active
+                            name="commenting"
+                            type='font-awesome'
+                            color='#9dc5fe'
 
-                                />
-                                <Text style={{ color: 'red', fontWeight: '700', fontSize: 14, marginLeft: 3 }}>20</Text>
-                            </View>
-
-                            <View style={styles.iconText}>
-                                <Icon
-                                    size={18}
-                                    active
-                                    name="tie"
-                                    type='material-community'
-                                    color='green'
-
-                                />
-                                <Text style={{ color: 'green', fontWeight: '700', fontSize: 14, }}>99</Text>
-                            </View>
-                        </View>
-
-
-                    </View>
-
-                    <View style={{}}>
-                        <Text style={{ color: '#000', textAlign: 'center', fontWeight: '400', fontSize: 14, margin: 6 }}> {item.description}</Text>
-                    </View>
-
+                        />
+                        <Text style={{ color: '#fdfdfd', fontWeight: '700', marginLeft: 10 }}>Message</Text>
+                    </TouchableOpacity>
                 </View>
-
-                 <View style={styles.buttonsContainer}>
-                            <TouchableOpacity onPress={() => this.processRegistration()} style={styles.actionButtonContainer} block iconLeft>
-                                <Icon
-                                    size={18}
-                                    active
-                                    name="phone"
-                                    type='font-awesome'
-                                    color='#9dc5fe'
-
-                                />
-                                <Text style={{ color: '#fdfdfd', fontWeight: '700', marginLeft: 10 }}>Call</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.processRegistration()} style={styles.actionButtonContainer} block iconLeft>
-                                <Icon
-                                    size={18}
-                                    active
-                                    name="commenting"
-                                    type='font-awesome'
-                                    color='#9dc5fe'
-
-                                />
-                                <Text style={{ color: '#fdfdfd', fontWeight: '700', marginLeft: 10 }}>Message</Text>
-                            </TouchableOpacity>
-                        </View>
 
 
             </View>
@@ -303,18 +289,18 @@ export default class Feed extends React.Component {
         for (var i = 0; i < categories.length; i++) {
             cat.push(
 
-                <View style={{alignItems:'center'}}>
+                <View style={{ alignItems: 'center' }}>
 
                     <Avatar
                         rounded
                         size="medium"
-                        overlayContainerStyle={{ backgroundColor: 'white', borderColor: "#749AD1", borderWidth: 5 }}
+                        overlayContainerStyle={{ backgroundColor: 'white', borderColor: "#749AD1", borderWidth: 2 }}
                         source={{
                             uri:
                                 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
                         }}
                     />
-                    <Text style={{ color: '#000', fontWeight: '200', fontSize: 13, marginLeft: 15 }}>mamagement</Text>
+                    <Text style={{ color: '#000', fontWeight: '200', fontSize: 12, marginLeft: 15 }}>mamagement</Text>
 
                 </View>
             );
@@ -389,11 +375,13 @@ const regions_list =
 const styles = StyleSheet.create({
     container: {
         width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+        backgroundColor: '#F5F5F5',
     },
     header: {
         backgroundColor: '#fff',
         paddingBottom: 10,
-        alignItems: 'center',
+
 
     },
     item: {
@@ -414,11 +402,11 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     loacationBox: {
-        flex: 1,
+
         marginRight: 13,
         marginLeft: 13,
         borderRadius: 20,
-        marginBottom: 10,
+        marginBottom: 15,
         marginTop: 15,
         backgroundColor: '#fff',
         flexDirection: 'row',
@@ -495,9 +483,9 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         flexDirection: 'row',
     },
-  
-  actionButtonContainer: {
-      marginTop:12,
+
+    actionButtonContainer: {
+        marginTop: 12,
         backgroundColor: "#17153d",
         marginLeft: 10,
         marginRight: 10,
@@ -506,10 +494,20 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         paddingRight: 20,
         paddingLeft: 20,
-        flex:1,
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    notificationBox: {
+        backgroundColor: '#749AD1',
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 7,
+        paddingBottom: 7,
+        borderRadius: 25,
+        marginLeft: 15,
+        marginRight: 15,
     },
 
 })

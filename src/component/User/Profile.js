@@ -120,7 +120,7 @@ export default class Profile extends React.Component {
     }
     render() {
         return (
-            <Container style={{ backgroundColor: 'transparent' }}>
+            <Container style={{ backgroundColor: '#f5f5f5' }}>
                     <View style={styles.container}>
 
                         <View style={styles.header}>
@@ -137,8 +137,8 @@ export default class Profile extends React.Component {
 
                             </View>
                             <View style={styles.titleContainer}>
-                                <Text style={{ color: '#000', fontWeight: '700', fontSize: 22, marginLeft: 10 }}>Eventure</Text>
-                                <Text style={{ color: '#000', fontWeight: '200', fontSize: 17, marginLeft: 10 }}>Event mamagement</Text>
+                                <Text style={{ color: '#000', fontWeight: '700', fontSize: 20, marginLeft: 10 }}>Eventure</Text>
+                                <Text style={{ color: '#000', fontWeight: '200', fontSize: 15, marginLeft: 10 }}>Event mamagement</Text>
                             </View>
 
 
@@ -194,7 +194,7 @@ export default class Profile extends React.Component {
 
 
                             <View style={{}}>
-                                <Text style={{ color: '#000', textAlign: 'center', fontWeight: '200', fontSize: 14, marginTop: 15, marginLeft: 15, marginRight: 15 }}> The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help Victoria Island, Lagos</Text>
+                                <Text style={{ color: '#000', textAlign: 'center', fontWeight: '200', fontSize: 12, marginTop: 15, marginLeft: 15, marginRight: 15 }}> The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help Victoria Island, Lagos</Text>
                             </View>
 
                             <TouchableOpacity style={styles.buttonContainer} block iconLeft>
@@ -286,48 +286,6 @@ export default class Profile extends React.Component {
 
                         </View>
                     </View>
-                    <View style={styles.locationButton}>
-
-                        <View style={styles.resultActiom}>
-
-                            <View style={styles.segmentConatainer}>
-                                <View style={styles.iconText}>
-                                    <Fine
-                                        size={18}
-                                        active
-                                        name="scissors"
-                                        type='entypo'
-                                        color='red'
-
-                                    />
-                                    <Text style={{ color: 'red', fontWeight: '700', fontSize: 14, marginLeft: 3 }}>20</Text>
-                                </View>
-
-                                <View style={styles.iconText}>
-                                    <Fine
-                                        size={18}
-                                        active
-                                        name="tie"
-                                        type='material-community'
-                                        color='green'
-
-                                    />
-                                    <Text style={{ color: 'green', fontWeight: '700', fontSize: 14, }}>99</Text>
-                                </View>
-                            </View>
-                            <View style={styles.segmentConatainer}>
-                                
-                            </View>
-                            <View style={styles.segmentConatainer}>
-                               
-                            </View>
-                        </View>
-
-
-
-
-                    </View>
-
                 </View >
             );
         }
@@ -416,7 +374,7 @@ const styles = StyleSheet.create({
     titleContainer: {
         alignItems: 'center',
         marginBottom: 5,
-        marginTop: 10,
+        marginTop: 5,
 
     },
     row: {
@@ -425,19 +383,20 @@ const styles = StyleSheet.create({
     },
     rowchild: {
         margin: 5,
+        marginLeft:20,
         alignItems: 'center',
     },
     performance: {
         color: '#000',
         fontWeight: '700',
-        fontSize: 22,
+        fontSize: 20,
         marginLeft: 10
     },
 
     performanceTitle: {
         color: '#000',
         fontWeight: '200',
-        fontSize: 13,
+        fontSize: 12,
         marginLeft: 10
     },
 
