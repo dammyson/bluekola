@@ -7,6 +7,7 @@
       text_color: '#455A64',
       white: '#FFFFFF',
       black: '#000',
+      dark_blue:'#17153D',
     }
 
 export default colors

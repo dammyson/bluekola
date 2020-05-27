@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Dimensions, TextInput, StyleSheet, AsyncStorage, Alert, ImageBackground, Platform, ActivityIndicator } from "react-native";
+import { Image, Dimensions, TextInput, StyleSheet, AsyncStorage, Alert, ImageBackground, Platform, ActivityIndicator, TouchableOpacity } from "react-native";
 import {
   Container,
   Content,
@@ -24,19 +24,10 @@ import { Actions } from 'react-native-router-flux';
 
 export default class Username extends Component {
 
-
-    componentDidMount() {
-        if(this.props.userDetails) {
-          this.setState({userDetail: this.props.userDetails});
-          console.warn(this.props.userDetails);
-        }
-    
-      }
-
   constructor(props) {
     super(props);
     this.state = {
-      userDetail: {},
+      userDetails: {},
       username: '',
       name: '',
       buttonState: 'idle'
@@ -45,8 +36,27 @@ export default class Username extends Component {
   }
 
 
+
+  componentDidMount() {
+    this.setState({
+      userDetails: this.props.navigation.getParam("userDetails", "defaultValue")
+    })
+  
+    }
+
+    replaceScreen = () => {
+      const { userDetails } = this.state
+      this.props.navigation.dispatch({
+        key: 'Home',
+        type: 'ReplaceCurrentScreen',
+        routeName: 'Home',
+        params: { },
+      });
+    };
+
+
   processRegistration() {
-    const { username, name,userDetail} = this.state
+    const { username, name,userDetails} = this.state
     if (username == "" || name == "") {
       Alert.alert('Validation failed', ' Fields cannot be empty', [{ text: 'Okay' }])
       return
@@ -59,9 +69,9 @@ export default class Username extends Component {
         'Content-Type': 'application/json',
       }, body: JSON.stringify({
         name: name,
-        email: userDetail.email,
-        password: userDetail.password,
-        phone:userDetail.phone,
+        email: userDetails.email,
+        password: userDetails.password,
+        phone:userDetails.phone,
         username:username
       }),
     })
@@ -71,11 +81,10 @@ export default class Username extends Component {
             AsyncStorage.setItem('auth', res.token.toString());
             AsyncStorage.setItem('rem', "login");
             this.setState({ buttonState: 'success' })
-            Actions.home();
+            this.replaceScreen() 
         } else {
             this.setState({ buttonState: 'error' })
            Alert.alert('Login failed', res.message, [{ text: 'Okay' }])
-        
           setTimeout(() => {
             this.setState({ buttonState: 'idle' })
           }, 2000);
@@ -88,7 +97,6 @@ export default class Username extends Component {
           this.setState({ buttonState: 'idle' })
         }, 2000);
       });
-
   }
 
 
@@ -104,14 +112,14 @@ export default class Username extends Component {
 
               <View style={styles.formArea}>
 
-              <View style={styles.arrowContainer}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack(null)} style={styles.arrowContainer}>
               <Icon
                 name="arrowleft"
                 size={30}
                 type='antdesign'
                 color= '#fff'
               />
-              </View>
+              </TouchableOpacity>
                 <View style={styles.card} >
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}> Create Username and Fullname </Text>

@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: '#ffffff',
         textAlign: 'left',
-        fontFamily: 'Montserrat-Bold'
+        fontFamily: 'Poppins-Bold'
     },
     title: {
         marginRight: 13,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         textAlign: 'left',
         fontWeight: '600',
-        fontFamily: 'Montserrat-Bold'
+        fontFamily: 'Poppins-Bold'
     },
 })
 

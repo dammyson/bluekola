@@ -13,7 +13,7 @@ import {
   Toast
 } from "native-base";
 import { SocialIcon } from 'react-native-elements'
-import {  Icon} from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import { Field, reduxForm, Form } from 'redux-form';
 const URL = require("../../component/server");
 import {
@@ -53,18 +53,18 @@ export default class Authentication extends Component {
       error: '',
       login_loading: true,
       demail: "",
-      phone:'',
+      phone: '',
       regButtonState: 'idle',
       loginButtonState: 'idle',
-      username:'',
-      password:''
+      username: '',
+      password: ''
     };
 
   }
 
 
 
-  processRegistration(){
+  processRegistration() {
 
     const { phone } = this.state
 
@@ -83,55 +83,58 @@ export default class Authentication extends Component {
     this.setState({ regButtonState: 'busy' })
     var phonenumber = 0 + phone.substr(phone.length - 10);
 
-      const userDetails = { phone: phonenumber }
-      Actions.otp({ userDetails: userDetails });
-/*
-
-    fetch(URL.url + '/api/send_otp', {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }, body: JSON.stringify({
-        phone: phonenumber,
-      }),
+    const userDetails = { phone: phonenumber }
+    this.props.navigation.navigate('Otp', 
+    {
+      userDetails: userDetails,
     })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status) {
-          const userDetails = { phone: phonenumber }
-          this.setState({ regButtonState: 'success' })
-           setTimeout(() => {
-            Actions.otp({ userDetails: userDetails });
-           }, 2000);
-
-
-        } else {
-
-          Alert.alert('Operation failed', "Pleas check you details and try again", [{ text: 'Okay' }])
-          this.setState({ regButtonState: 'error' })
-          setTimeout(() => {
-            this.setState({ regButtonState: 'idle' })
-          }, 2000);
-        }
-      }).catch((error) => {
-        alert(error.message);
-        this.setState({ regButtonState: 'error' })
-        setTimeout(() => {
-          this.setState({ regButtonState: 'idle' })
-        }, 2000);
-      });
-*/
+    /*
+    
+        fetch(URL.url + '/api/send_otp', {
+          method: 'POST', headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }, body: JSON.stringify({
+            phone: phonenumber,
+          }),
+        })
+          .then(res => res.json())
+          .then(res => {
+            if (res.status) {
+              const userDetails = { phone: phonenumber }
+              this.setState({ regButtonState: 'success' })
+               setTimeout(() => {
+                Actions.otp({ userDetails: userDetails });
+               }, 2000);
+    
+    
+            } else {
+    
+              Alert.alert('Operation failed', "Pleas check you details and try again", [{ text: 'Okay' }])
+              this.setState({ regButtonState: 'error' })
+              setTimeout(() => {
+                this.setState({ regButtonState: 'idle' })
+              }, 2000);
+            }
+          }).catch((error) => {
+            alert(error.message);
+            this.setState({ regButtonState: 'error' })
+            setTimeout(() => {
+              this.setState({ regButtonState: 'idle' })
+            }, 2000);
+          });
+    */
   }
 
 
-  processLogin(){
+  processLogin() {
 
-    const { username, password} = this.state
+    const { username, password } = this.state
 
-    if (username == ""  || password == "") {
+    if (username == "" || password == "") {
       Alert.alert('Validation failed', 'Userdetails field cannot be empty', [{ text: 'Okay' }])
       return
-    } 
+    }
 
 
     this.setState({ loginButtonState: 'busy' })
@@ -152,10 +155,8 @@ export default class Authentication extends Component {
           AsyncStorage.setItem('auth', res.token.toString());
           AsyncStorage.setItem('rem', "login");
           this.setState({ loginButtonState: 'success' })
-            Actions.home();
-
+          this.props.navigation.navigate('Home')
         } else {
-
           Alert.alert('Operation failed', "Pleas check you details and try again", [{ text: 'Okay' }])
           this.setState({ loginButtonState: 'error' })
           setTimeout(() => {
@@ -223,23 +224,23 @@ export default class Authentication extends Component {
                       onChangeText={text => this.setState({ password: text })}
                     />
 
-                  {this.state.loginButtonState =='busy' ?  
-                  <Button style={styles.buttonContainer} block iconLeft>
-                   <SkypeIndicator color='white' />  
-                  </Button>               
-                  : this.state.loginButtonState =='success' ?    
-                   <Button style={styles.successButtonContainer} block iconLeft>
-                  <Icon  name="check" size={30}  type='antdesign'  color= '#fff' />
-                  </Button> 
-                  : 
-                  this.state.loginButtonState =='error' ?    
-                   <Button style={styles.errorButtonContainer} block iconLeft>
-                  <Icon  name="check" size={30}  type='antdesign'  color= '#fff' />
-                  </Button> 
-                  : 
-                   <Button onPress={() => this.processLogin()} style={styles.buttonContainer} block iconLeft>
-                  <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>ENTER</Text>
-                  </Button>   }
+                    {this.state.loginButtonState == 'busy' ?
+                      <Button style={styles.buttonContainer} block iconLeft>
+                        <SkypeIndicator color='white' />
+                      </Button>
+                      : this.state.loginButtonState == 'success' ?
+                        <Button style={styles.successButtonContainer} block iconLeft>
+                          <Icon name="check" size={30} type='antdesign' color='#fff' />
+                        </Button>
+                        :
+                        this.state.loginButtonState == 'error' ?
+                          <Button style={styles.errorButtonContainer} block iconLeft>
+                            <Icon name="check" size={30} type='antdesign' color='#fff' />
+                          </Button>
+                          :
+                          <Button onPress={() => this.processLogin()} style={styles.buttonContainer} block iconLeft>
+                            <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>ENTER</Text>
+                          </Button>}
 
                   </View>
 
@@ -280,22 +281,22 @@ export default class Authentication extends Component {
                       onChangeText={text => this.setState({ phone: text })}
                     />
 
-                    {this.state.loginButtonState =='busy' ?  
-                  <Button style={styles.buttonContainer} block iconLeft>
-                   <SkypeIndicator color='white' />  
-                  </Button>               
-                  : this.state.loginButtonState =='success' ?    
-                   <Button style={styles.successButtonContainer} block iconLeft>
-                  <Icon  name="check" size={30}  type='antdesign'  color= '#fff' />
-                  </Button> 
-                  : this.state.loginButtonState =='error' ?    
-                  <Button style={styles.errorButtonContainer} block iconLeft>
-                 <Icon  name="close" size={30}  type='antdesign'  color= '#fff' />
-                 </Button> 
-                 : 
-                  <Button onPress={() => this.processRegistration()} style={styles.buttonContainer} block iconLeft>
-                 <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>ENTER</Text>
-                 </Button>     }
+                    {this.state.loginButtonState == 'busy' ?
+                      <Button style={styles.buttonContainer} block iconLeft>
+                        <SkypeIndicator color='white' />
+                      </Button>
+                      : this.state.loginButtonState == 'success' ?
+                        <Button style={styles.successButtonContainer} block iconLeft>
+                          <Icon name="check" size={30} type='antdesign' color='#fff' />
+                        </Button>
+                        : this.state.loginButtonState == 'error' ?
+                          <Button style={styles.errorButtonContainer} block iconLeft>
+                            <Icon name="close" size={30} type='antdesign' color='#fff' />
+                          </Button>
+                          :
+                          <Button onPress={() => this.processRegistration()} style={styles.buttonContainer} block iconLeft>
+                            <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>ENTER</Text>
+                          </Button>}
 
                     <View style={styles.inputContainer}>
                       <View style={styles.lineStyle} />
@@ -321,7 +322,7 @@ export default class Authentication extends Component {
                         iconSize={18}
                       />
                       <SocialIcon
-                      
+
                         type='instagram'
                         iconSize={18}
                       />
@@ -352,8 +353,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F5FCFF',
   },
-  wrapper:{
- 
+  wrapper: {
+
   },
   background: {
     flex: 1,
@@ -402,7 +403,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     backgroundColor: '#f1f1f1',
     borderColor: '#ffffff',
-    paddingLeft:20
+    paddingLeft: 20
   },
   passinput: {
     height: 45,
@@ -414,7 +415,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     backgroundColor: '#f1f1f1',
     borderColor: '#ffffff',
-    paddingLeft:20
+    paddingLeft: 20
   },
   titleContainer: {
     marginLeft: 40,

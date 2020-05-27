@@ -37,11 +37,24 @@ export default class Otp extends Component {
   }
 
   componentDidMount() {
-    if(this.props.userDetails) {
-      this.setState({userDetails: this.props.userDetails});
-    }
+    this.setState({
+      userDetails: this.props.navigation.getParam("userDetails", "defaultValue")
+    })
+
+   
 
   }
+
+
+  replaceScreen = () => {
+    const { userDetails } = this.state
+    this.props.navigation.dispatch({
+      key: 'Registration',
+      type: 'ReplaceCurrentScreen',
+      routeName: 'Registration',
+      params: { userDetails: userDetails },
+    });
+  };
 
 /*
   login() {
@@ -99,13 +112,15 @@ export default class Otp extends Component {
   }*/
 
   logIn() {
-    this.setState({ buttonState: 'busy' })
-    const {userDetails} = this.state
 
+   
+    this.setState({ buttonState: 'busy' })
+    const { userDetails } = this.state
+    console.warn(userDetails)
     setTimeout(() => {
       this.setState({ buttonState: 'success' })
       setTimeout(() => {
-        Actions.reg({ userDetails: userDetails });
+        this.replaceScreen()
       }, 2000);
   
     }, 2000);
@@ -113,6 +128,7 @@ export default class Otp extends Component {
   }
 
   render() {
+    const {userDetails} = this.state
     return (
       <Container>
         <ImageBackground source={bg} style={styles.background}>
@@ -138,7 +154,7 @@ export default class Otp extends Component {
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>Verify your Number</Text>
                   </View>
-                    <Text style={styles.subTitle}>A one time password has been sent to your mobile device. Enter the code to verify your number</Text>
+                    <Text style={styles.subTitle}>A one time password has been sent to your mobile device ( {userDetails.phone} ). Enter the code to verify your number</Text>
                     <View style={styles.otpContainer}>
 
                         <OTPInputView

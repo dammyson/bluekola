@@ -10,14 +10,14 @@ import {
     Right,
     Body,
     Button,
-    Grid,
     Col,
 } from 'native-base';
 import CardComponent from '../User/CardComponenet';
 import { Actions } from 'react-native-router-flux';
 
 import ListPanel from '../utilities/ListPanel'
-import GridProductThumb from '../utilities/GridProductThumb'
+import GalleryGrid from '../utilities/GalleryGrid'
+import Grid from '../utilities/Grid'
 import homeData from '../utilities/home'
 import { Icon as Fine, Avatar } from 'react-native-elements';
 
@@ -77,43 +77,61 @@ export default class Profile extends React.Component {
         })
 
     }
+
+    _renderGridList(data) {
+        return (
+            <ListPanel>
+                <Grid>
+                    {
+                        data.items.map((item, idx) => {
+                            return <GalleryGrid onPress={() => this._pressProduct(item.id)} key={idx} {...item} />
+                        })
+                    }
+                </Grid>
+            </ListPanel>
+        )
+    }
     renderSection = () => {
         if (this.state.activeIndex == 0) {
             return (
-                <View >
-                     {this.renderResuts()}
+                <View>
+                <View style={{justifyContent:'flex-end', alignItems:'center', marginTop:10,}} >
+
+                        <TouchableOpacity  onPress={()=>  this.props.navigation.navigate('CreateService')} style={styles.nextButtonContainer} block iconLeft>
+
+                        <Fine
+                                    active
+                                    name="plus"
+                                    type='entypo'
+                                    color='#fff'
+
+                                />
+                        <Text style={styles.nextButtonText}>Add New Service </Text>
+                      </TouchableOpacity>
+               
+                      </View>
+
+                <View>
+                    {this.renderResuts()}
                 </View>
+
+            </View >
             )
         }
         else if (this.state.activeIndex == 1) {
             return (
                 <View>
-                    <View>
-                            {this.renderResuts()}
-                        </View>
-                    <View style={{
-                        margin: 20,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderColor: '#000',
-                        borderStyle: 'dotted',
-                        borderWidth: 1,
-                        borderRadius: 1,
-                        paddingBottom: 30,
-                        paddingTop: 30
-                    }} >
-                      <Button   
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '100%'
-                    }} 
-                    onPress={() => Actions.createservice()} transparent>
-                      <Icon name="add" ></Icon>
-                      <Text style={{ color: '#4d4d4d' }}>add a service</Text>
-                        </Button>
-                    </View>
+                    <ScrollView>
+                        {this._renderGridList(homeData.grid_fashion)}
+                    </ScrollView>
 
+                </View>
+            )
+        }
+        else if (this.state.activeIndex == 2) {
+            return (
+                <View>
+                    {this.renderReviews()}
                 </View>
             )
         }
@@ -121,138 +139,138 @@ export default class Profile extends React.Component {
     render() {
         return (
             <Container style={{ backgroundColor: '#f5f5f5' }}>
-                    <View style={styles.container}>
+                <View style={styles.container}>
 
-                        <View style={styles.header}>
-                            <View style={styles.item}>
-                                <Avatar
-                                    rounded
-                                    size="large"
-                                    overlayContainerStyle={{ backgroundColor: 'white', borderColor: "#749AD1", borderWidth: 5 }}
-                                    source={{
-                                        uri:
-                                            'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                                    }}
+                    <View style={styles.header}>
+                        <View style={styles.item}>
+                            <Avatar
+                                rounded
+                                size="large"
+                                overlayContainerStyle={{ backgroundColor: 'white', borderColor: "#749AD1", borderWidth: 5 }}
+                                source={{
+                                    uri:
+                                        'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                                }}
+                            />
+
+                        </View>
+                        <View style={styles.titleContainer}>
+                            <Text style={{ color: '#000', fontWeight: '700', fontSize: 20, marginLeft: 10 }}>Eventure</Text>
+                            <Text style={{ color: '#000', fontWeight: '200', fontSize: 15, marginLeft: 10 }}>Event mamagement</Text>
+                        </View>
+
+
+                        <View style={styles.row}>
+
+                            <View style={styles.rowchild}>
+                                <Fine
+                                    active
+                                    name="scissors"
+                                    type='entypo'
+                                    color='#707070'
+
                                 />
 
+                                <Text style={styles.performance}>999</Text>
+                                <Text style={styles.performanceTitle}>Unsatisfied</Text>
+
+
                             </View>
-                            <View style={styles.titleContainer}>
-                                <Text style={{ color: '#000', fontWeight: '700', fontSize: 20, marginLeft: 10 }}>Eventure</Text>
-                                <Text style={{ color: '#000', fontWeight: '200', fontSize: 15, marginLeft: 10 }}>Event mamagement</Text>
-                            </View>
+                            <View style={styles.rowchild}>
 
-
-                            <View style={styles.row}>
-
-                                <View style={styles.rowchild}>
-                                    <Fine
-                                        active
-                                        name="scissors"
-                                        type='entypo'
-                                        color='#707070'
-
-                                    />
-
-                                    <Text style={styles.performance}>999</Text>
-                                    <Text style={styles.performanceTitle}>Unsatisfied</Text>
-
-
-                                </View>
-                                <View style={styles.rowchild}>
-
-                                    <Fine
-                                        active
-                                        name="tie"
-                                        type='material-community'
-                                        color='#707070'
-
-                                    />
-
-                                    <Text style={styles.performance}>999</Text>
-                                    <Text style={styles.performanceTitle}>Satisfied</Text>
-
-
-
-                                </View>
-                                <View style={styles.rowchild}>
-
-
-                                    <Fine
-                                        active
-                                        name="briefcase"
-                                        type='font-awesome'
-                                        color='#707070'
-
-                                    />
-
-                                    <Text style={styles.performance}>999</Text>
-                                    <Text style={styles.performanceTitle}>Experiances</Text>
-
-
-                                </View>
-                            </View>
-
-
-                            <View style={{}}>
-                                <Text style={{ color: '#000', textAlign: 'center', fontWeight: '200', fontSize: 12, marginTop: 15, marginLeft: 15, marginRight: 15 }}> The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help Victoria Island, Lagos</Text>
-                            </View>
-
-                            <TouchableOpacity style={styles.buttonContainer} block iconLeft>
-                                <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>Contact Us</Text>
-                            </TouchableOpacity>
-
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderTopWidth: 1, borderTopColor: '#eae5e5',  backgroundColor:"#fff", paddingBottom:3, paddingTop:3 }}>
-
-
-                            <TouchableOpacity style={{ alignItems: 'center'}}
-                                onPress={() => this.segmentClicked(0)}
-                                active={this.state.activeIndex == 0}
-                            >
                                 <Fine
-                                        active
-                                        name="server"
-                                        type='font-awesome'
-                                        color={this.state.activeIndex == 0 ? '#394fa1' :  'gray'} 
+                                    active
+                                    name="tie"
+                                    type='material-community'
+                                    color='#707070'
 
-                                    />
-                                <Text style={[styles.tabText, this.state.activeIndex == 0 ? {color: '#394fa1' } : { color: 'gray'}]}>Services</Text>
-                            </TouchableOpacity>
+                                />
 
-                            <TouchableOpacity style={{ alignItems: 'center'}}
-                                onPress={() => this.segmentClicked(1)}
-                                active={this.state.activeIndex == 1}
-                            >
-                               <Fine
-                                        name="collections"
-                                        type='material-icon'
-                                        color={this.state.activeIndex == 1 ? '#394fa1' :  'gray'} 
-
-                                    />
-                                <Text style={[styles.tabText, this.state.activeIndex == 1 ? {color: '#394fa1' } : { color: 'gray'}]}>Gallery</Text>
-                            </TouchableOpacity>
+                                <Text style={styles.performance}>999</Text>
+                                <Text style={styles.performanceTitle}>Satisfied</Text>
 
 
-                            <TouchableOpacity style={{ alignItems: 'center'}}
-                                onPress={() => this.segmentClicked(2)}
-                                active={this.state.activeIndex == 2}
-                            >
-                             <Fine
-                                     
-                                        name="thumbs-up"
-                                        type='font-awesome'
-                                        color={this.state.activeIndex == 2 ? '#394fa1' :  'gray'} 
 
-                                    />
-                             <Text style={[styles.tabText, this.state.activeIndex == 2 ? {color: '#394fa1' } : { color: 'gray'}]}>Reviews</Text>
-                            </TouchableOpacity>
+                            </View>
+                            <View style={styles.rowchild}>
 
 
+                                <Fine
+                                    active
+                                    name="briefcase"
+                                    type='font-awesome'
+                                    color='#707070'
+
+                                />
+
+                                <Text style={styles.performance}>999</Text>
+                                <Text style={styles.performanceTitle}>Experiances</Text>
+
+
+                            </View>
                         </View>
+
+
+                        <View style={{}}>
+                            <Text style={{ color: '#000', textAlign: 'center', fontWeight: '200', fontSize: 12, marginTop: 15, marginLeft: 15, marginRight: 15 }}> The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help Victoria Island, Lagos</Text>
+                        </View>
+
+                        <TouchableOpacity onPress={() => this._pressSeeAllProducts()} style={styles.buttonContainer} block iconLeft>
+                            <Text style={{ color: '#fdfdfd', fontWeight: '700' }}>Contact Us</Text>
+                        </TouchableOpacity>
 
                     </View>
-                    <Content style={styles.contentcontainer}>
+
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderTopWidth: 1, borderTopColor: '#eae5e5', backgroundColor: "#fff", paddingBottom: 3, paddingTop: 3 }}>
+
+
+                        <TouchableOpacity style={{ alignItems: 'center' }}
+                            onPress={() => this.segmentClicked(0)}
+                            active={this.state.activeIndex == 0}
+                        >
+                            <Fine
+                                active
+                                name="server"
+                                type='font-awesome'
+                                color={this.state.activeIndex == 0 ? '#394fa1' : 'gray'}
+
+                            />
+                            <Text style={[styles.tabText, this.state.activeIndex == 0 ? { color: '#394fa1' } : { color: 'gray' }]}>Services</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{ alignItems: 'center' }}
+                            onPress={() => this.segmentClicked(1)}
+                            active={this.state.activeIndex == 1}
+                        >
+                            <Fine
+                                name="collections"
+                                type='material-icon'
+                                color={this.state.activeIndex == 1 ? '#394fa1' : 'gray'}
+
+                            />
+                            <Text style={[styles.tabText, this.state.activeIndex == 1 ? { color: '#394fa1' } : { color: 'gray' }]}>Gallery</Text>
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity style={{ alignItems: 'center' }}
+                            onPress={() => this.segmentClicked(2)}
+                            active={this.state.activeIndex == 2}
+                        >
+                            <Fine
+
+                                name="thumbs-up"
+                                type='font-awesome'
+                                color={this.state.activeIndex == 2 ? '#394fa1' : 'gray'}
+
+                            />
+                            <Text style={[styles.tabText, this.state.activeIndex == 2 ? { color: '#394fa1' } : { color: 'gray' }]}>Reviews</Text>
+                        </TouchableOpacity>
+
+
+                    </View>
+
+                </View>
+                <Content style={styles.contentcontainer}>
                     <View>
                         {this.renderSection()}
                     </View>
@@ -266,7 +284,7 @@ export default class Profile extends React.Component {
             cat.push(
                 <View style={styles.resultBox}>
 
-                    <View style={styles.loacationText}>
+                    <TouchableOpacity onPress={() => this._pressSeeAllProducts()} style={styles.loacationText}>
 
                         <View style={styles.resultDescription}>
                             <View style={styles.resultImage}>
@@ -285,15 +303,48 @@ export default class Profile extends React.Component {
                             </View>
 
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View >
             );
         }
         return cat;
     }
-   
+
+
+    renderReviews() {
+        let cat = [];
+        for (var i = 0; i < categories.length; i++) {
+            cat.push(
+                <View style={styles.resultBox}>
+
+                    <TouchableOpacity style={styles.loacationText}>
+
+                        <View style={styles.resultDescription}>
+                            <View style={styles.resultImage}>
+                                <Avatar
+                                    rounded
+                                    size="medium"
+                                    source={{
+                                        uri:
+                                            'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                                    }}
+                                />
+                            </View>
+                            <View style={styles.resultTextDescription}>
+                                <Text style={{ color: '#000', fontWeight: '700', fontSize: 14, marginLeft: 10 }}>Sweet Fire</Text>
+                                <Text style={{ color: '#000', fontWeight: '200', fontSize: 12, marginLeft: 10 }}>{categories[i].description}</Text>
+                            </View>
+
+                        </View>
+                    </TouchableOpacity>
+                </View >
+            );
+        }
+        return cat;
+    }
+
     _pressSeeAllProducts() {
-        Actions.home();
+        this.props.navigation.navigate('ServieDetails');
     }
 }
 var categories = [
@@ -383,7 +434,7 @@ const styles = StyleSheet.create({
     },
     rowchild: {
         margin: 5,
-        marginLeft:20,
+        marginLeft: 20,
         alignItems: 'center',
     },
     performance: {
@@ -400,7 +451,7 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
 
-    tabText:{
+    tabText: {
         fontWeight: '800',
         fontSize: 12,
     },
@@ -482,5 +533,25 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingLeft: 10
     },
+    nextButtonContainer: {
+        backgroundColor: "#749AD1",
+        borderRadius:20,
+        flexDirection:'row',
+    paddingLeft:12,
+    alignItems:'center'
+       
+      
+      },
+      nextButtonText:{
+        color: "#fff",
+        fontSize: 13,
+        marginTop: 5,
+        marginRight: 20,
+        marginLeft: 20,
+        marginBottom:5,
+        fontFamily: "Poppins-Bold",
+
+       
+      }
 
 })

@@ -2,9 +2,9 @@ import React from "react";
 import { View } from "react-native";
 import {  createBottomTabNavigator, createAppContainer } from "react-navigation";
 
-import Home from '../User/Feed';
-import Search from '../search/Search';
-import Profile from '../User/Profile';
+import Home from './HomeNavigator';
+import Search from './SearchNavigator';
+import Profile from './ProfileNavigator';
 
 import { Card, Icon,SocialIcon} from 'react-native-elements'
 import styles from "@twotalltotems/react-native-otp-input/styles";
@@ -21,7 +21,7 @@ const TabsNavigation = createBottomTabNavigator( {
         const { routeName } = navigation.state;
         if (routeName === 'Home') {
           return (
-            <View style={{paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'blue'}}> 
+            <View style={{}}> 
             <Icon
             active
             focused={focused}
@@ -33,18 +33,17 @@ const TabsNavigation = createBottomTabNavigator( {
           );
         }else if(routeName === 'Search') {
           return (
-            <View style={{ height:40, width:40, paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'red'}}> 
+            <View style={{ height:60, width:60, justifyContent:'center', alignItems:'center',  marginBottom:20, borderRadius: 40, backgroundColor:'#749AD1', borderWidth:3, borderColor:tintColor}}> 
             <Icon
             active
             name="search"
             type='font-awesome'
-            color={tintColor}
           />
           </View>
           );
         } else if(routeName === 'Profile') {
           return (
-            <View style={{paddingLeft: 20,paddingRight: 20, paddingTop: 20, paddingBottom: 20, borderRadius: 40, backgroundColor:'blue'}}> 
+            <View style={{}}> 
             <Icon
             active
             name="user"

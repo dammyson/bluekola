@@ -27,31 +27,32 @@ import { Actions } from 'react-native-router-flux';
 export default class Registration extends Component {
 
 
-  componentDidMount() {
-    if(this.props.userDetails) {
-      this.setState({userDetail: this.props.userDetails});
-    
-    }
-
-  }
-
   constructor(props) {
     super(props);
     this.state = {
-      userDetail: {},
       email: '',
       password: '',
-      confirmPassword: '',
-      buttonState: 'idle'
+      confirm_password: '',
+      buttonState: 'idle',
+      phone:''
     };
 
   }
 
+  componentDidMount() {
+    this.setState({
+      phone: this.props.navigation.getParam("userDetails", "defaultValue").phone
+    })
+
+  }
+
+ 
+
 
  login() {
    
-    const { email, confirmPassword, password, userDetail} = this.state
-    if (email == "" || password == "" || confirmPassword == "") {
+    const { email, confirm_password, password, phone} = this.state
+    if (email == "" || password == "" || confirm_password == "") {
 
       Alert.alert('Validation failed', ' Fields cannot be empty', [{ text: 'Okay' }])
       return
@@ -59,14 +60,20 @@ export default class Registration extends Component {
     } else {
 
 
-      if(phone.length > 5 ){
-        if (password == confirmPassword) {
-          const userDetails = {phone: userDetail.phone, email: email, password: password }
+      if(password.length > 5 ){
+        if (password == confirm_password) {
+          const userDetails = {phone: phone, email: email, password: password }
+          console.warn(userDetails)
   
           this.setState({ buttonState: 'busy' })
           setTimeout(() => {
             this.setState({ buttonState: 'success' })
-            Actions.username({ userDetails: userDetails });
+
+            this.props.navigation.navigate('Username', 
+            {
+              userDetails: userDetails,
+            })
+          
   
           }, 2000);
   
@@ -104,7 +111,7 @@ export default class Registration extends Component {
               <View style={styles.formArea}>
 
               <View style={styles.arrowContainer}>
-              <TouchableOpacity onPress={() => Actions.pop()} >
+              <TouchableOpacity onPress={() => this.props.navigation.goBack(null)} >
               <Icon
                 name="arrowleft"
                 size={30}
@@ -136,12 +143,13 @@ export default class Registration extends Component {
                     placeholder="Password"
                     placeholderTextColor='#000'
                     returnKeyType="next"
-                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onSubmitEditing={() => this.passwordConfirmInput.focus()}
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                     style={styles.input}
                     inlineImageLeft='ios-call'
+                    ref={(input)=> this.passwordInput = input}
                     onChangeText={text => this.setState({ password: text })}
                   />
 
@@ -151,13 +159,14 @@ export default class Registration extends Component {
                     placeholder="Confirm Password"
                     placeholderTextColor='#000'
                     returnKeyType="next"
-                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onSubmitEditing={() =>this.login()}
                     keyboardType="numeric"
                     autoCapitalize="none"
                     autoCorrect={false}
                     style={styles.input}
                     inlineImageLeft='ios-call'
-                    onChangeText={text => this.setState({ confirmPassword: text })}
+                    onChangeText={text => this.setState({ confirm_password: text })}
+                    ref={(input)=> this.passwordConfirmInput = input}
                   />
 
                   {this.state.buttonState =='busy' ?  

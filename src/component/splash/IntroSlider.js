@@ -52,7 +52,7 @@ export default class IntroSlider extends Component {
             <Text style={styles.headText}>{categories[i].title}</Text>
             <Text style={styles.text}>{categories[i].text}</Text>
             <TouchableOpacity style={styles.buttonContainer} 
-              onPress ={() =>  Actions.auth()} >
+              onPress ={() =>  this.props.navigation.navigate('Authentication')} >
                 <Text style={styles.buttonText}
               >Sign Up</Text>
   

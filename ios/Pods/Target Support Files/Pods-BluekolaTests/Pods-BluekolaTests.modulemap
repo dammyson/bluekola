@@ -1,0 +1,6 @@
+framework module Pods_BluekolaTests {
+  umbrella header "Pods-BluekolaTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

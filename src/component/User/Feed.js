@@ -21,7 +21,7 @@ import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel'
 
 
 
-export default class Feed extends React.Component {
+class Feed extends React.Component {
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
 
@@ -33,13 +33,14 @@ export default class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.onEventPress = this.onEventPress.bind(this)
+        this._renderItem = this._renderItem.bind(this)
 
         this.state = {
-            loading: false,
+            loading: true,
             data: [],
             auth: '',
             dataone: [],
-            datatwo: [],
+            categories: [],
             slider1ActiveSlide: 0,
             selected: null
         };
@@ -58,13 +59,9 @@ export default class Feed extends React.Component {
             this.loadServices();
         })
 
-
-        this.setState({
-            dataone: regions_list,
-        })
     }
-    onEventPress(data) {
-        this.setState({ selected: data })
+    onEventPress() {
+        this.props.navigation.navigate('ServieDetails');
     }
 
     loadServices = () => {
@@ -87,9 +84,10 @@ export default class Feed extends React.Component {
                 }
 
                 this.setState({
-                    data: res.data,
+                    data: res.data.services,
                     loading: false,
                     status: res.status,
+                    categories:res.data.categories
 
                 });
                 this.arrayholder = res.data;
@@ -186,8 +184,13 @@ export default class Feed extends React.Component {
         Actions.home();
     }
     _renderItem({ item, index }, parallaxProps) {
+        const { navigate } = this.props.navigation;
         return (
-            <View style={{ width: Dimensions.get('window').width - 100, height: Dimensions.get('window').height / 1.8, }}>
+            <TouchableOpacity onPress={()=>  navigate('ServieDetails' , 
+            {
+              id: item.id,
+            })} 
+            style={{ width: Dimensions.get('window').width - 100, height: Dimensions.get('window').height / 1.8, }}>
 
                 <ImageBackground
                     style={{ flex: 1, borderRadius: 12, marginTop: 0 }}
@@ -279,14 +282,15 @@ export default class Feed extends React.Component {
                 </View>
 
 
-            </View>
+            </TouchableOpacity>
         );
     }
 
     renderCategory() {
-
+         var array = this.state.categories;
+         
         let cat = [];
-        for (var i = 0; i < categories.length; i++) {
+        for (var i = 0; i < array.length; i++) {
             cat.push(
 
                 <View style={{ alignItems: 'center' }}>
@@ -300,7 +304,7 @@ export default class Feed extends React.Component {
                                 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
                         }}
                     />
-                    <Text style={{ color: '#000', fontWeight: '200', fontSize: 12, marginLeft: 15 }}>mamagement</Text>
+                    <Text style={{ color: '#000', fontWeight: '200', fontSize: 12, marginLeft: 15 }}>{array[i].name}</Text>
 
                 </View>
             );
@@ -309,69 +313,8 @@ export default class Feed extends React.Component {
 
     }
 }
+export default Feed;
 
-var categories = [
-    {
-        id: 1,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    },
-    {
-        id: 2,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    },
-    {
-        id: 1,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    },
-    {
-        id: 2,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    },
-    {
-        id: 1,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    },
-    {
-        id: 2,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    },
-    {
-        id: 1,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    },
-    {
-        id: 2,
-        title: 'Cooperative Family Feeding(CFF)',
-        image: 'https://www.ita-obe.com/images/direct-customer.png',
-        description: 'The cooperative movement began in Europe in the 19th century, primarily in Britain and France as a self-help    '
-    }
-];
-
-const regions_list =
-    [
-        { id: 0, name: 'Select Country' },
-        { id: 11, name: 'Nigeria' },
-        { id: 12, name: 'United Kindomjjjjjjj' },
-        { id: 0, name: 'Select Country' },
-        { id: 11, name: 'Nigeria' },
-        { id: 12, name: 'United Kindomjjjjjjj' },
-        { id: 13, name: 'United States jjjjj' }
-    ]
-    ;
 const styles = StyleSheet.create({
     container: {
         width: Dimensions.get('window').width,

@@ -7,21 +7,21 @@ import { Actions } from 'react-native-router-flux';
 export default class Splash extends Component{
   async componentDidMount(){
     setTimeout(() => {
-     //this.initPage();
-     this.props.navigation.navigate('Home');
+     this.initPage();
+    // this.props.navigation.navigate('IntroSlider');
     }, 1000);
    }
 
   initPage = () => {
     AsyncStorage.getItem('rem').then((value) => {
+      console.warn(value);
       if(value=='login'){
         this.props.navigation.navigate('Home');
-
       }else if(value==null){
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('IntroSlider');
       }
       else{
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('IntroSlider');
       } 
     })
    
