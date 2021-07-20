@@ -11,7 +11,7 @@
     "native-base": "^2.7.2",
     "prop-types": "^15.7.2",
     "react": "16.8.3",
-    "react-native": "0.59.8",
+    "react-native": "0.62.3",
     "react-native-animated-multistep": "^1.0.5",
     "react-native-app-intro-slider": "^3.0.0",
     "react-native-drawer": "^2.5.1",
